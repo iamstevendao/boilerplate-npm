@@ -18,14 +18,14 @@
     "express-flash": "0.0.2",
     "express-session": "^1.2.1",
     "express-validator": "^2.20.4",
-    "jade": "^1.11.0",
     "less": "^2.7.1",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.8",
     "morgan": "^1.7.0",
     "nodemailer": "^2.3.0",
     "nodemon": "^1.9.1",
-    "npm-run-all": "^1.8.0"
+    "npm-run-all": "^1.8.0",
+    "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {},
   "engines": {
