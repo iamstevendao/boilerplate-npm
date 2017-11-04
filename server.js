@@ -8,7 +8,7 @@ var flash = require('express-flash');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var dotenv = require('dotenv');
-var mongoose = require('mongoose');
+var mongodb = require('mongodb').MongoClient;
 
 // Load environment variables from .env file
 dotenv.load();
@@ -19,12 +19,11 @@ var contactController = require('./controllers/contact');
 
 var app = express();
 
-
-mongoose.connect(process.env.MONGODB);
-mongoose.connection.on('error', function () {
-  console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
-  process.exit(1);
-});
+mongodb.connect(process.env.MONGODB, (err, db) => {
+  if (err) { console.log('Unable to connect to the MongoDB server. Error: ', err) }
+  console.log('Connection established!')
+  db.close()
+})
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('port', process.env.PORT || 3000);
