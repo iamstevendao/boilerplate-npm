@@ -14,16 +14,20 @@ var mongodb = require('mongodb').MongoClient
 dotenv.load()
 
 // Controllers
-var HomeController = require('./controllers/home')
+var homeController = require('./controllers/home')
 var contactController = require('./controllers/contact')
 
 var app = express()
+var urls
 
 mongodb.connect(process.env.MONGODB, (err, db) => {
-  if (err) { console.log('Unable to connect to the MongoDB server. Error: ', err) }
-  console.log('Connection established!')
+  if (err) {
+    console.log('Unable to connect to the MongoDB server. Error: ', err)
+    return
+  }
   db.close()
 })
+
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 app.set('port', process.env.PORT || 3000)
@@ -37,9 +41,10 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitia
 app.use(flash())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', HomeController.index)
-app.get('/contact', contactController.contactGet)
-app.post('/contact', contactController.contactPost)
+app.route('/').get(homeController.index)
+app.route('/contact')
+  .get(contactController.contactGet)
+  .post(contactController.contactPost)
 
 // Production error handler
 if (app.get('env') === 'production') {
