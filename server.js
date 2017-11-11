@@ -48,13 +48,18 @@ app.route('/contact')
 
 // Production error handler
 if (app.get('env') === 'production') {
-  app.use(function (err, req, res, next) {
+  app.use((err, req, res, next) => {
     console.error(err.stack)
     res.sendStatus(err.status || 500)
   })
 }
 
-app.listen(app.get('port'), function () {
+// 404
+app.use((req, res, next) => {
+  res.render('404')
+})
+
+app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'))
 })
 
