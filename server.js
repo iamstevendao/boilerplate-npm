@@ -18,7 +18,6 @@ var homeController = require('./controllers/home')
 var contactController = require('./controllers/contact')
 
 var app = express()
-var urls
 
 mongodb.connect(process.env.MONGODB, (err, db) => {
   if (err) {
